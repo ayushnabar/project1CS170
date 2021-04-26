@@ -1,4 +1,4 @@
-import queue, copy
+import queue, copy, math
 
 class Node:
 
@@ -53,7 +53,7 @@ class Node:
                 if(self.grid[i][j] == ' '):
                     return i
 
-    def update_heuristic(self, goal):
+    def misplaced_heuristic(self, goal):
         h = 0
         for i in range(3):
             for j in range(3):
@@ -61,6 +61,42 @@ class Node:
                     h += 1
         self.hn = h
         self.fn = h + self.gn
+
+    def euclidean_heuristic(self, goal):
+        ed = 0;
+        one_row, one_col = 0,0
+        two_row, two_col = 0,1
+        three_row, three_col = 0,2
+        four_row, four_col = 1,0
+        five_row, five_col = 1,1
+        six_row, six_col = 1,2
+        seven_row, seven_col = 2,0
+        eight_row, eight_col = 2,1
+        blank_row, blank_col = 2,2
+
+        for i in range(3):
+            for j in range(3):
+                if self.grid[i][j] == '1':
+                    ed += math.sqrt(math.pow(i-one_row,2)+math.pow(j-one_col,2))
+                elif self.grid[i][j] == '2':
+                    ed += math.sqrt(math.pow(i-two_row,2)+math.pow(j-two_col,2))
+                elif self.grid[i][j] == '3':
+                    ed += math.sqrt(math.pow(i-three_row,2)+math.pow(j-three_col,2))
+                elif self.grid[i][j] == '4':
+                    ed += math.sqrt(math.pow(i-four_row,2)+math.pow(j-four_col,2))
+                elif self.grid[i][j] == '5':
+                    ed += math.sqrt(math.pow(i-five_row,2)+math.pow(j-five_col,2))
+                elif self.grid[i][j] == '6':
+                    ed += math.sqrt(math.pow(i-six_row,2)+math.pow(j-six_col,2))
+                elif self.grid[i][j] == '7':
+                    ed += math.sqrt(math.pow(i-seven_row,2)+math.pow(j-seven_col,2))
+                elif self.grid[i][j] == '8':
+                    ed += math.sqrt(math.pow(i-eight_row,2)+math.pow(j-eight_col,2))
+                elif self.grid[i][j] == ' ':
+                    ed += math.sqrt(math.pow(i-blank_row,2)+math.pow(j-blank_col,2))
+
+        self.hn = ed
+        self.fn = ed + self.gn
 
     # def set_right_child(self, grid):
     #     self.right = grid
