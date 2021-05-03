@@ -1,30 +1,30 @@
-import queue, copy, math
+import copy, math
 
 class Node:
 
     def __init__(self, matrix, parent, gn):
         self.grid = matrix
-        self.parent = None
+        self.parent = parent
         self.left = None
         self.right = None
         self.up = None
         self.down = None
         self.hn = 0
-        self.gn = 0
+        self.gn = gn
         self.fn = self.gn + self.hn
 
-    def __lt__(self, other):
-        return self.fn < other.fn
-    def __le__(self, other):
-        return self.fn <= other.fn
-    def __eq__(self, other):
-        return self.fn == other.fn
-    def __ne__(self, other):
-        return self.fn != other.fn
-    def __gt__(self, other):
-        return self.fn > other.fn
-    def __ge__(self, other):
-        return self.fn >= other.fn
+    # def __lt__(self, other):
+    #     return self.fn < other.fn
+    # def __le__(self, other):
+    #     return self.fn <= other.fn
+    # def __eq__(self, other):
+    #     return self.grid == other.grid
+    # def __ne__(self, other):
+    #     return self.grid != other.grid
+    # def __gt__(self, other):
+    #     return self.fn > other.fn
+    # def __ge__(self, other):
+    #     return self.fn >= other.fn
 
     def set_right_child(self, child):
         self.right = child
@@ -63,40 +63,48 @@ class Node:
         self.fn = h + self.gn
 
     def euclidean_heuristic(self, goal):
-        ed = 0;
-        one_row, one_col = 0,0
-        two_row, two_col = 0,1
-        three_row, three_col = 0,2
-        four_row, four_col = 1,0
-        five_row, five_col = 1,1
-        six_row, six_col = 1,2
-        seven_row, seven_col = 2,0
-        eight_row, eight_col = 2,1
-        blank_row, blank_col = 2,2
+        # ed = 0;
+        # one_row, one_col = 0,0
+        # two_row, two_col = 0,1
+        # three_row, three_col = 0,2
+        # four_row, four_col = 1,0
+        # five_row, five_col = 1,1
+        # six_row, six_col = 1,2
+        # seven_row, seven_col = 2,0
+        # eight_row, eight_col = 2,1
+        # blank_row, blank_col = 2,2
 
-        for i in range(3):
-            for j in range(3):
-                if self.grid[i][j] == '1':
-                    ed += math.sqrt(math.pow(i-one_row,2)+math.pow(j-one_col,2))
-                elif self.grid[i][j] == '2':
-                    ed += math.sqrt(math.pow(i-two_row,2)+math.pow(j-two_col,2))
-                elif self.grid[i][j] == '3':
-                    ed += math.sqrt(math.pow(i-three_row,2)+math.pow(j-three_col,2))
-                elif self.grid[i][j] == '4':
-                    ed += math.sqrt(math.pow(i-four_row,2)+math.pow(j-four_col,2))
-                elif self.grid[i][j] == '5':
-                    ed += math.sqrt(math.pow(i-five_row,2)+math.pow(j-five_col,2))
-                elif self.grid[i][j] == '6':
-                    ed += math.sqrt(math.pow(i-six_row,2)+math.pow(j-six_col,2))
-                elif self.grid[i][j] == '7':
-                    ed += math.sqrt(math.pow(i-seven_row,2)+math.pow(j-seven_col,2))
-                elif self.grid[i][j] == '8':
-                    ed += math.sqrt(math.pow(i-eight_row,2)+math.pow(j-eight_col,2))
-                elif self.grid[i][j] == ' ':
-                    ed += math.sqrt(math.pow(i-blank_row,2)+math.pow(j-blank_col,2))
+        # for i in range(3):
+        #     for j in range(3):
+        #         if self.grid[i][j] == '1':
+        #             ed += math.sqrt(math.pow(i-one_row,2)+math.pow(j-one_col,2))
+        #         elif self.grid[i][j] == '2':
+        #             ed += math.sqrt(math.pow(i-two_row,2)+math.pow(j-two_col,2))
+        #         elif self.grid[i][j] == '3':
+        #             ed += math.sqrt(math.pow(i-three_row,2)+math.pow(j-three_col,2))
+        #         elif self.grid[i][j] == '4':
+        #             ed += math.sqrt(math.pow(i-four_row,2)+math.pow(j-four_col,2))
+        #         elif self.grid[i][j] == '5':
+        #             ed += math.sqrt(math.pow(i-five_row,2)+math.pow(j-five_col,2))
+        #         elif self.grid[i][j] == '6':
+        #             ed += math.sqrt(math.pow(i-six_row,2)+math.pow(j-six_col,2))
+        #         elif self.grid[i][j] == '7':
+        #             ed += math.sqrt(math.pow(i-seven_row,2)+math.pow(j-seven_col,2))
+        #         elif self.grid[i][j] == '8':
+        #             ed += math.sqrt(math.pow(i-eight_row,2)+math.pow(j-eight_col,2))
+        #         # elif self.grid[i][j] == ' ':
+        #         #     ed += math.sqrt(math.pow(i-blank_row,2)+math.pow(j-blank_col,2))
+        sum = 0
+        for i in range(0,3):
+            for j in range(0,3):
+                if self.grid[i][j] != ' ':
+                    row = (int(self.grid[i][j])-1) / 3
+                    col = (int(self.grid[i][j])-1) % 3
 
-        self.hn = ed
-        self.fn = ed + self.gn
+                    sum+= pow( pow(i - row,2) + pow(j - col,2) , 0.5)
+
+        self.hn = sum
+        self.fn = sum + self.gn
 
     # def set_right_child(self, grid):
     #     self.right = grid
@@ -106,6 +114,11 @@ class Node:
     #     self.left = grid
     # def set_down_child(self, grid):
     #     self.down = grid
+    def print_grid(self):
+        print(self.grid[0][0], self.grid[0][1], self.grid[0][2])
+        print(self.grid[1][0], self.grid[1][1], self.grid[1][2])
+        print(self.grid[2][0], self.grid[2][1], self.grid[2][2])
+        print('\n')
 
     def expand_node(self):
         frontier = []
@@ -148,6 +161,7 @@ class Node:
             down_grid[blank_row][blank_col] = down_grid[blank_row+1][blank_col]
             down_grid[blank_row+1][blank_col] = temp
             down_child = Node(down_grid, self, self.gn+1)
+
             self.set_down_child(down_child)
             frontier.append(down_child)
 
