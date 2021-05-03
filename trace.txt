@@ -1,0 +1,42 @@
+Welcome to 862169589's 8 puzzle solver.
+Type 1 to use a default puzzle, or 2 to enter your own puzzle: 2
+Enter your puzzle, use a zero to represent the blank
+Enter the first row, use space or tabs between numbers: 1 0 3
+Enter the second row, use space or tabs between numbers: 4 2 6
+Enter the third row, use space or tabs between numbers: 7 5 8
+Enter you choice of algorithm
+
+Uniform Cost Search
+A* with the Misplaced Tile heuristic
+A* with the Eucledian distance heuristic
+Type 1 for Uniform Cost Search, 2 for Misplaced Tile, 3 for Euclidean distance: 3
+The best state to expand with g(n) =  0 and h(n) =  0  is...
+
+('1', ' ', '3')
+('4', '2', '6')
+('7', '5', '8')
+
+
+The best state to expand with g(n) =  1 and h(n) =  2.0  is...
+
+('1', '2', '3')
+('4', ' ', '6')
+('7', '5', '8')
+
+
+The best state to expand with g(n) =  2 and h(n) =  1.0  is...
+
+('1', '2', '3')
+('4', '5', '6')
+('7', ' ', '8')
+
+
+The best state to expand with g(n) =  3 and h(n) =  0.0  is...
+
+('1', '2', '3')
+('4', '5', '6')
+('7', '8', ' ')
+
+
+To solve this problem the search algorithm expanded a total of  3  nodes.
+The maximum number of nodes in the queue at any one time:  8
